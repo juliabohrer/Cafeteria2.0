@@ -78,9 +78,12 @@ h2, h4{
 </a>
 
 <div>
+    <a class="btn menu-btn me-2" href="{{ route('fornecedor.index') }}">Fornecedor</a>
+    <a class="btn menu-btn me-2" href="{{ route('funcionario.index') }}">Funcionários</a>
     <a class="btn menu-btn me-2" href="{{ route('produto.index') }}">Produtos</a>
     <a class="btn menu-btn me-2" href="{{ route('pedido.index') }}">Pedidos</a>
-    <a class="btn menu-btn me-2" href="{{ route('funcionario.index') }}">Funcionários</a>
+    <a class="btn menu-btn me-2" href="{{ route('entrega.index') }}">Entrega</a>
+    
 </div>
 
 </div>

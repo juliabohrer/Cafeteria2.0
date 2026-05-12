@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Funcionario;
 
 class PedidoFactory extends Factory
 {
@@ -10,10 +11,8 @@ class PedidoFactory extends Factory
     {
         return [
             'cliente' => $this->faker->name(),
-            'produto_id' => $this->faker->numberBetween(1, 10),
-            'funcionario_id' => $this->faker->numberBetween(1, 10),
-            'quantidade' => $this->faker->numberBetween(1, 5),
-            'total' => $this->faker->randomFloat(2, 10, 100)
+            'funcionario_id' => Funcionario::inRandomOrder()->first()->id ?? 1,
+            'total' => 0
         ];
     }
 }

@@ -13,20 +13,14 @@ return new class extends Migration
 
             $table->string('cliente');
 
-            // PRODUTO
-            $table->foreignId('produto_id')
-                ->nullable() // 👈 permite ficar null
-                ->constrained()
-                ->nullOnDelete(); // 👈 se deletar produto → vira null
-
             // FUNCIONÁRIO
             $table->foreignId('funcionario_id')
-                ->nullable() // 👈 obrigatório!
+                ->nullable()
                 ->constrained()
-                ->nullOnDelete(); // 👈 se deletar funcionário → vira null
+                ->nullOnDelete();
 
-            $table->integer('quantidade');
-            $table->decimal('total', 10, 2);
+            // Total do pedido (soma dos itens)
+            $table->decimal('total', 10, 2)->default(0);
 
             $table->timestamps();
         });

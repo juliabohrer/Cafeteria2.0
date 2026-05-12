@@ -5,14 +5,18 @@
 <h4>Formulário Produto</h4>
 
 @php
-    if (!empty($dado->id)) {
-        $action = route('produto.update', $dado->id);
-    } else {
-        $action = route('produto.store');
-    }
+    $action = !empty($dado->id)
+        ? route('produto.update', $dado->id)
+        : route('produto.store');
 
     $nome_imagem = !empty($dado->imagem) ? $dado->imagem : 'sem_imagem.png';
 @endphp
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        Preencha os campos obrigatórios!
+    </div>
+@endif
 
 <form action="{{ $action }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -22,31 +26,59 @@
     @endif
 
     <div class="row">
-        <input type="hidden" name="id" value="{{ $dado->id ?? '' }}">
-
         <div class="col">
-            <label>Nome</label>
-            <input type="text" name="nome" class="form-control"
-                value="{{ old('nome', $dado->nome ?? '') }}">
+            <label>Nome *</label>
+
+            <input type="text"
+                name="nome"
+                class="form-control @error('nome') is-invalid @enderror"
+                value="{{ old('nome', $dado->nome ?? '') }}"
+                required>
+
+            @error('nome')
+                <small class="text-danger">Campo obrigatório</small>
+            @enderror
         </div>
 
         <div class="col">
-            <label>Preço</label>
-            <input type="text" name="preco" class="form-control"
-                value="{{ old('preco', $dado->preco ?? '') }}">
+            <label>Preço *</label>
+
+            <input type="text"
+                name="preco"
+                class="form-control @error('preco') is-invalid @enderror"
+                value="{{ old('preco', $dado->preco ?? '') }}"
+                required>
+
+            @error('preco')
+                <small class="text-danger">Campo obrigatório</small>
+            @enderror
         </div>
     </div>
 
     <div class="row mt-2">
         <div class="col">
-            <label>Descrição</label>
-            <input type="text" name="descricao" class="form-control"
-                value="{{ old('descricao', $dado->descricao ?? '') }}">
+            <label>Descrição *</label>
+
+            <input type="text"
+                name="descricao"
+                class="form-control @error('descricao') is-invalid @enderror"
+                value="{{ old('descricao', $dado->descricao ?? '') }}"
+                required>
+
+            @error('descricao')
+                <small class="text-danger">Campo obrigatório</small>
+            @enderror
         </div>
 
         <div class="col">
-            <label>Categoria</label>
-            <select name="categoria_id" class="form-select">
+            <label>Categoria *</label>
+
+            <select name="categoria_id"
+                class="form-select @error('categoria_id') is-invalid @enderror"
+                required>
+
+                <option value="">Selecione</option>
+
                 @foreach ($categorias as $item)
                     <option value="{{ $item->id }}"
                         {{ old('categoria_id', $dado->categoria_id ?? '') == $item->id ? 'selected' : '' }}>
@@ -54,6 +86,34 @@
                     </option>
                 @endforeach
             </select>
+
+            @error('categoria_id')
+                <small class="text-danger">Selecione uma categoria</small>
+            @enderror
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col">
+            <label>Fornecedor *</label>
+
+            <select name="fornecedor_id"
+                class="form-select @error('fornecedor_id') is-invalid @enderror"
+                required>
+
+                <option value="">Selecione</option>
+
+                @foreach ($fornecedores as $f)
+                    <option value="{{ $f->id }}"
+                        {{ old('fornecedor_id', $dado->fornecedor_id ?? '') == $f->id ? 'selected' : '' }}>
+                        {{ $f->nome }}
+                    </option>
+                @endforeach
+            </select>
+
+            @error('fornecedor_id')
+                <small class="text-danger">Selecione um fornecedor</small>
+            @enderror
         </div>
     </div>
 

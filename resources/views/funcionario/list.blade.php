@@ -2,98 +2,242 @@
 @section('titulo', 'Listagem de Funcionários')
 @section('content')
 
-<h4>Listagem de Funcionários</h4>
+<h4 class="mb-4 fw-bold">
+    Listagem de Funcionários
+</h4>
 
-<div class="row">
-    <div class="col">
-        <form action="{{ route('funcionario.search') }}" method="post">
-            @csrf
+<!-- ===================================================== -->
+<!-- BUSCA -->
+<!-- ===================================================== -->
 
-            <div class="row">
-                <div class="col-md-3">
-                    <label>Tipo</label>
-                    <select name="tipo" class="form-select">
-                        <option value="nome">Nome</option>
-                        <option value="cpf">CPF</option>
-                    </select>
-                </div>
+<form action="{{ route('funcionario.search') }}"
+      method="POST">
 
-                <div class="col-md-3">
-                    <label>Valor</label>
-                    <input type="text" name="valor" class="form-control" placeholder="Buscar...">
-                </div>
+    @csrf
 
-                <div class="col-md-3">
-                    <button class="btn btn-primary">Buscar</button>
-                </div>
+    <div class="row mb-4">
 
-                <div class="col-md-3">
-                    <a href="{{ url('funcionario/create') }}" class="btn btn-success">Novo</a>
-                </div>
-            </div>
-        </form>
+        {{-- TIPO --}}
+        <div class="col-md-3">
+
+            <select name="tipo"
+                    class="form-select shadow-sm">
+
+                <option value="nome">
+                    Nome
+                </option>
+
+                <option value="cpf">
+                    CPF
+                </option>
+
+            </select>
+
+        </div>
+
+        {{-- VALOR --}}
+        <div class="col-md-6">
+
+            <input type="text"
+                   name="valor"
+                   class="form-control shadow-sm"
+                   placeholder="Buscar funcionário...">
+
+        </div>
+
+        {{-- BOTÃO --}}
+        <div class="col-md-3 d-grid">
+
+            <button class="btn btn-primary">
+
+                Buscar
+
+            </button>
+
+        </div>
+
     </div>
+
+</form>
+
+<!-- ===================================================== -->
+<!-- BOTÕES -->
+<!-- ===================================================== -->
+
+<div class="d-flex gap-2 mb-4 flex-wrap">
+
+    {{-- NOVO --}}
+    <a href="{{ url('funcionario/create') }}"
+       class="btn btn-success shadow-sm">
+
+        Novo Funcionário
+
+    </a>
+
 </div>
 
-<br>
+<!-- ===================================================== -->
+<!-- TABELA -->
+<!-- ===================================================== -->
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Imagem</th>
-            <th>Nome</th>
-            <th>CPF</th>
-            <th>Endereço</th>
-            <th>Horário</th>
-            <th>Ação</th>
-            <th>Ação</th>
-        </tr>
-    </thead>
+<div class="table-responsive">
 
-    <tbody>
-        @foreach ($dados as $item)
+    <table class="table table-hover table-bordered align-middle shadow-sm">
 
-        @php
-            $nome_imagem = !empty($item->imagem) ? $item->imagem : 'sem_imagem.png';
-        @endphp
+        <thead class="table-dark">
 
-        <tr>
-            <td>{{ $item->id }}</td>
+            <tr>
 
-            <td>
-                <img src="{{ asset('storage/' . $nome_imagem) }}"
-                     width="100"
-                     height="100"
-                     style="object-fit: cover; border-radius: 50%;">
-            </td>
+                <th width="70">
+                    #
+                </th>
 
-            <td>{{ $item->nome }}</td>
-            <td>{{ $item->cpf }}</td>
-            <td>{{ $item->endereco }}</td>
-            <td>{{ $item->horario }}</td>
+                <th width="130">
+                    Imagem
+                </th>
 
-            <td>
-                <a href="{{ route('funcionario.edit', $item->id) }}" class="btn btn-warning">
-                    Editar
-                </a>
-            </td>
+                <th width="220">
+                    Nome
+                </th>
 
-            <td>
-                <form action="{{ route('funcionario.destroy', $item->id) }}" method="post">
-                    @csrf
-                    @method('DELETE')
+                <th width="170">
+                    CPF
+                </th>
 
-                    <button class="btn btn-danger"
-                        onclick="return confirm('Deseja remover?')">
-                        Deletar
-                    </button>
-                </form>
-            </td>
-        </tr>
+                <th>
+                    Endereço
+                </th>
 
-        @endforeach
-    </tbody>
-</table>
+                <th width="150">
+                    Horário
+                </th>
+
+                <th width="220">
+                    Ações
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach ($dados as $item)
+
+            @php
+
+                $nome_imagem =
+                    !empty($item->imagem)
+                        ? $item->imagem
+                        : 'sem_imagem.png';
+
+            @endphp
+
+            <tr>
+
+                {{-- ID --}}
+                <td class="fw-bold">
+
+                    {{ $item->id }}
+
+                </td>
+
+                {{-- IMAGEM --}}
+                <td>
+
+                    <img src="{{ asset('storage/' . $nome_imagem) }}"
+                         width="100"
+                         height="100"
+                         style="
+                            object-fit: cover;
+                            border-radius: 50%;
+                            border: 3px solid #dee2e6;
+                         ">
+
+                </td>
+
+                {{-- NOME --}}
+                <td>
+
+                    <strong class="fs-6">
+
+                        {{ $item->nome }}
+
+                    </strong>
+
+                </td>
+
+                {{-- CPF --}}
+                <td>
+
+                    <span class="badge bg-primary fs-6">
+
+                        {{ $item->cpf }}
+
+                    </span>
+
+                </td>
+
+                {{-- ENDEREÇO --}}
+                <td>
+
+                    {{ $item->endereco }}
+
+                </td>
+
+                {{-- HORÁRIO --}}
+                <td>
+
+                    <span class="badge bg-warning text-dark fs-6">
+
+                        {{ $item->horario }}
+
+                    </span>
+
+                </td>
+
+                {{-- AÇÕES --}}
+                <td>
+
+                    <div class="d-flex gap-2">
+
+                        {{-- EDITAR --}}
+                        <a href="{{ route('funcionario.edit', $item->id) }}"
+                           class="btn btn-warning btn-sm w-100">
+
+                            Editar
+
+                        </a>
+
+                        {{-- EXCLUIR --}}
+                        <form action="{{ route('funcionario.destroy', $item->id) }}"
+                              method="POST"
+                              class="w-100">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-danger btn-sm w-100"
+                                    onclick="return confirm('Deseja remover?')">
+
+                                Excluir
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            @endforeach
+
+        </tbody>
+
+    </table>
+
+</div>
 
 @stop

@@ -49,9 +49,16 @@
     <h2 class="mb-4">Aroma do Grão - Sistema</h2>
 
     <div>
+
+        <a href="/fornecedor" class="btn btn-custom">Fornecedores</a>
         <a href="/funcionario" class="btn btn-custom">Funcionários</a>
         <a href="/produto" class="btn btn-custom">Produtos</a>
         <a href="/pedido" class="btn btn-custom">Pedidos</a>
+        <a href="/entrega" class="btn btn-custom">Entrega</a>
+
+
+
+
     </div>
 
 </div>

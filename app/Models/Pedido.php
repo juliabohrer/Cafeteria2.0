@@ -11,19 +11,25 @@ class Pedido extends Model
 
     protected $fillable = [
         'cliente',
-        'produto_id',
         'funcionario_id',
-        'quantidade',
         'total'
     ];
 
-        public function produto()
-    {
-        return $this->belongsTo(Produto::class);
-    }
-
+    // funcionário que fez o pedido
     public function funcionario()
     {
-        return $this->belongsTo(Funcionario::class);
+        return $this->belongsTo(Funcionario::class, 'funcionario_id');
     }
+
+    // itens do pedido
+    public function itens()
+    {
+        return $this->hasMany(ItemPedido::class, 'pedido_id');
+    }
+
+    // entrega do pedido (1:1)
+public function entrega()
+{
+    return $this->hasOne(Entrega::class, 'pedido_id', 'id');
+}
 }
