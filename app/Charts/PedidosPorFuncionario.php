@@ -9,12 +9,12 @@ class PedidosPorFuncionario
 {
     protected $chart;
 
-    public function __construct(LarapexChart $chart) //recebe
+    public function __construct(LarapexChart $chart) 
     {
-        $this->chart = $chart;//guarda 
+        $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\BarChart //monta o grafico de barra
+    public function build(): \ArielMejiaDev\LarapexCharts\BarChart 
     {
 
         $dados = DB::table('pedidos')
@@ -26,12 +26,11 @@ class PedidosPorFuncionario
             )
             ->select(
                 'funcionarios.nome',
-                DB::raw('count(*) as total') //conta os registros
+                DB::raw('count(*) as total') 
             )
             ->groupBy('funcionarios.nome')
             ->get();
 
-        // Arrays do gráfico
         $nomes = [];
         $totais = [];
 
@@ -41,7 +40,7 @@ class PedidosPorFuncionario
             $totais[] = $item->total;
         }
 
-        // Gráfico
+        
         return $this->chart->barChart()
 
             ->setTitle('Pedidos por Funcionário')
@@ -53,13 +52,11 @@ class PedidosPorFuncionario
             ->setXAxis($nomes)
 
             ->setColors([
-                '#6F4E37', // café
+                '#6F4E37', 
             ])
 
             ->setGrid()
 
-            ->setFontColor('#4B2E2E')
-
-            ->setToolbar(true);
+            ->setFontColor('#4B2E2E');
     }
 }

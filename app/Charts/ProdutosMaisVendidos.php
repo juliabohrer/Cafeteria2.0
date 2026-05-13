@@ -9,9 +9,9 @@ class ProdutosMaisVendidos
 {
     protected $chart;
 
-    public function __construct(LarapexChart $chart)//recebe
+    public function __construct(LarapexChart $chart)
     {
-        $this->chart = $chart;//guarda
+        $this->chart = $chart; 
     }
 
     public function build(): \ArielMejiaDev\LarapexCharts\PieChart
@@ -28,7 +28,7 @@ class ProdutosMaisVendidos
 
             ->select(
                 'produtos.nome',
-                DB::raw('SUM(item_pedidos.quantidade) as total')//definir os dados buscados
+                DB::raw('SUM(item_pedidos.quantidade) as total')
             )
 
             ->groupBy('produtos.nome')
@@ -46,7 +46,7 @@ class ProdutosMaisVendidos
             $totais[] = (int) $item->total;
         }
 
-        //GRAFICO
+        
         return $this->chart->pieChart()
 
             ->setTitle('Produtos Mais Vendidos')
