@@ -13,13 +13,13 @@ return new class extends Migration
 
             $table->string('cliente');
 
-            // FUNCIONÁRIO
             $table->foreignId('funcionario_id')
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
 
-            // Total do pedido (soma dos itens)
+            $table->integer('quantidade')->default(1);
+
             $table->decimal('total', 10, 2)->default(0);
 
             $table->timestamps();

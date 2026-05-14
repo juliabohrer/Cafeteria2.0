@@ -11,7 +11,12 @@ class PedidoFactory extends Factory
     {
         return [
             'cliente' => $this->faker->name(),
-            'funcionario_id' => Funcionario::inRandomOrder()->first()->id ?? 1,
+
+            'funcionario_id' =>
+                Funcionario::inRandomOrder()->first()->id ?? 1,
+
+            'quantidade' => rand(1, 10),
+
             'total' => 0
         ];
     }
